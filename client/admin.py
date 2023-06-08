@@ -14,10 +14,12 @@ class ClientAdmin(admin.ModelAdmin):
     )
     search_fields = ('name',)
 
+
 @admin.register(Telephone)
 class TelephoneAdmin(admin.ModelAdmin):
-    list_display = ('number','type',)
+    list_display = ('number', 'type',)
     search_fields = ('number',)
+
 
 @admin.register(Address)
 class AddresstAdmin(admin.ModelAdmin):

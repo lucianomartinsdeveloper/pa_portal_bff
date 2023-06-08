@@ -7,7 +7,7 @@ from django.db import models
 # class Remote(models.Model):
 #     _DATABASE = 'remote'
 
-class Client(models.Model):    
+class Client(models.Model):
     name = models.CharField(
         'Nome',
         max_length=120,
@@ -67,6 +67,7 @@ class Client(models.Model):
         verbose_name = "Cliente"
         verbose_name_plural = "Clientes"
 
+
 class Telephone(models.Model):
     TYPE_PHONE = [
         ("cel", "Celular"),
@@ -89,6 +90,7 @@ class Telephone(models.Model):
     class Meta:
         verbose_name = 'Telefone'
         verbose_name_plural = 'Telefones'
+
 
 class Address(models.Model):
     public_place = models.CharField(
