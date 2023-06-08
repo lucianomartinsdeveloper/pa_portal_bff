@@ -1,47 +1,43 @@
-# Project Template by Luxu
+ Projeto Backend para o Pipoca Ágil
 
-## Como rodar o template?
+## Para começar
 * Crie um virtualenv com Python.
-```
-- Windows
-python -m venv .venv
---------------------
-- Linux
-python3 -m venv .venv
-```
+
+#### Windows
+
+``python -m venv .venv``
+
+#### Linux
+
+``python3 -m venv .venv``
+
 * Ative o virtualenv.
-```
-Windows
-.venv/Scripts/activate
---------------------
-Linux
-source .venv/bin/activate
-```
-* Instale o django
-```
-python.exe -m pip install --upgrade pip
-pip install django
+#### Windows
+`` .venv/Scripts/activate``
 
-django-admin startproject --template https://github.com/luxu/template_default_django/archive/master.zip my_site
-cd my_site
-```
+#### Linux
+`` source .venv/bin/activate``
+
+OBS: À partir de agora que acessou a virtualenv todos os comandos dentro dela só precisa usar **python e pip**
+
 * Instale as dependências.
-``
-pip install -r requirements.txt
-``
-* Criar o *.env*
+
+``pip install -r requirements\dev.txt``
+
+* Gerar o arquivo o *.env*
+
 ``python contrib/env_gen.py``
-* Fazer as alterações necessárias
-* Rode as migrações.
-```
-python manage.py migrate
-python manage.py createsuperuser --username="admin" --email=""
-python manage.py runserver
-```
 
-Para o test com Pytest
-* Instale as dependências.
-``
-pip install -r requirements-dev.txt
-``
-Na pasta **core** tem uma pasta **tests** onde devem ficar os tests
+* Fazer as alterações necessárias
+
+* Rode as migrações.
+ 
+```python manage.py migrate```
+
+* Criar um usuário padrão
+
+``python manage.py createsuperuser``
+
+* Rode a aplicação
+
+``python manage.py runserver``
