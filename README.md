@@ -31,7 +31,7 @@ OBS: À partir de agora que acessou a virtualenv todos os comandos dentro dela s
 * Fazer as alterações necessárias
 
 * Rode as migrações.
- 
+
 ```python manage.py migrate```
 
 * Criar um usuário padrão
