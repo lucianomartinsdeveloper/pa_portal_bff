@@ -1,16 +1,20 @@
 from pathlib import Path
-from decouple import config, Csv
+
+from decouple import Csv, config
 from dj_database_url import parse as db_url
+
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-SECRET_KEY = config('SECRET_KEY')
+SECRET_KEY = config("SECRET_KEY")
 
-DEBUG = config('DEBUG', default=False, cast=bool)
+DEBUG = config("DEBUG", default=False, cast=bool)
 
-ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv())
+ALLOWED_HOSTS = config("ALLOWED_HOSTS", cast=Csv())
 
-CORS_ALLOWED_ORIGINS = ['http://localhost:8080',]
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:8080",
+]
 
 INSTALLED_APPS = [
     "django.contrib.admin",
@@ -21,12 +25,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     # apps terceiro
     "rest_framework",
+    "rest_framework.authtoken",
+    "djoser",
+    # "rest_framework_simplejwt",
     "django_extensions",
-    "dr_scaffold",
+    # "dr_scaffold",
     "corsheaders",
     # apps
     "core",
-    "client"
 ]
 
 MIDDLEWARE = [
@@ -59,31 +65,12 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "backend.wsgi.application"
 
+default_db_url = "sqlite:///" + str(BASE_DIR / "pipoca.sqlite3")
 DATABASES = {
-    'default': config(
-        'DATABASE_URL',
-        default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-        cast=db_url
-    )
+    "default": config("DATABASE_URL", default=default_db_url, cast=db_url)
 }
 
-# DATABASES = {
-#     'default': config(
-#         'DATABASE_URL',
-#         default='sqlite:///' + str(BASE_DIR / 'db.sqlite3'),
-#         cast=db_url
-#     ),
-#     'remotedata' : {                                    # conveniently, postgres on supabase as well
-#         'ENGINE' : 'django.db.backends.postgresql',
-#         'NAME' : 'postgres',
-#         'HOST' : config('SUPABASE_HOST'),
-#         'PASSWORD': config('SUPABASE_PW'),
-#         'PORT': 5432,
-#         'USER': 'postgres',
-#         'CERT' : 'config.prod-ca-2021.crt',             # download this from database/settings and put in your main app folder
-#     }
-# }
-# DATABASE_ROUTERS = ['config.routers.CustomRouter']
+AUTH_USER_MODEL = "core.User"
 
 AUTH_PASSWORD_VALIDATORS = [
     {
@@ -100,6 +87,14 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+REST_FRAMEWORK = {
+    "DEFAULT_PERMISSION_CLASSES": (
+        "rest_framework.permissions.IsAuthenticated",
+    ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
 
 LANGUAGE_CODE = "pt-br"
 
@@ -112,3 +107,9 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+DJOSER = {
+    "SERIALIZERS": {
+        "user_create": "core.serializers.UserRegistrationSerializer"
+    }
+}
