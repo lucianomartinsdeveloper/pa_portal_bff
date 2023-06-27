@@ -50,6 +50,7 @@ class User(AbstractUser, PermissionsMixin):
         (PRO, "Profissional da área de agilidade"),
         (CUR, "Curioso sobre o universo da agilidade"),
     ]
+    username = models.CharField("Nome", max_length=150)
     uid = UUIDField(default=uuid.uuid4, editable=False)
     email = models.EmailField("Email", unique=True)
     occupation = models.CharField(
