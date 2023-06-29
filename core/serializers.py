@@ -44,3 +44,8 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
         if idade < 18:
             raise serializers.ValidationError("Tem que ser maior de idade.")
         return value
+
+
+class ListUserSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = User
