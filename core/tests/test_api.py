@@ -1,3 +1,5 @@
+from datetime import datetime, timedelta
+
 from rest_framework import status
 from rest_framework.test import APIClient
 
@@ -68,8 +70,10 @@ def test_create_user_less_than_3_letters(db):
 
 
 def test_must_be_of_legal_age(db):
+    data_birth = datetime.now() + timedelta(days=1)
+    print(">>>>>>>>>>>>>>>>>>PASSOU<<<<<<<<<<<<<<<<")
     data = {
-        "birth_date": "2005-06-22",
+        "birth_date": data_birth.strftime("%Y-%m-%d"),
         "email": "p1@p.com",
         "password": "luxu1650",
         "type_of_audience": "PRO",
