@@ -54,7 +54,7 @@ CORS_ORIGIN_ALLOW_ALL = True
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
+        "DIRS": [BASE_DIR / "templates"],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -113,7 +113,18 @@ STATIC_URL = "static/"
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 DJOSER = {
+    "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
+    "EMAIL": {"password_reset": "core.email.PasswordResetEmail"},
     "SERIALIZERS": {
         "user_create": "core.serializers.UserRegistrationSerializer"
-    }
+    },
 }
+
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+
+DEFAULT_FROM_EMAIL = config("DEFAULT_FROM_EMAIL", "webmaster@localhost")
+EMAIL_HOST = config("EMAIL_HOST", "localhost")  #  '0.0.0.0'
+EMAIL_PORT = config("EMAIL_PORT", 1025, cast=int)
+EMAIL_HOST_USER = config("EMAIL_HOST_USER", "")
+EMAIL_HOST_PASSWORD = config("EMAIL_HOST_PASSWORD", "")
+EMAIL_USE_TLS = config("EMAIL_USE_TLS", default=False, cast=bool)
