@@ -1,7 +1,9 @@
 from pathlib import Path
 
+import sentry_sdk
 from decouple import Csv, config
 from dj_database_url import parse as db_url
+from sentry_sdk.integrations.django import DjangoIntegration
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -101,14 +103,24 @@ REST_FRAMEWORK = {
 }
 
 LANGUAGE_CODE = "pt-br"
-
 TIME_ZONE = "America/Sao_Paulo"
-
 USE_I18N = True
-
 USE_TZ = True
-
 STATIC_URL = "static/"
+
+sentry_sdk.init(
+    dsn="https://7f36254b0c444c5db28d0e45506e4b68@o4505510564724736.ingest.sentry.io/4505510579798016",
+    integrations=[
+        DjangoIntegration(),
+    ],
+    # Set traces_sample_rate to 1.0 to capture 100%
+    # of transactions for performance monitoring.
+    # We recommend adjusting this value in production.
+    traces_sample_rate=1.0,
+    # If you wish to associate users to errors (assuming you are using
+    # django.contrib.auth) you may enable sending PII data.
+    send_default_pii=True,
+)
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
