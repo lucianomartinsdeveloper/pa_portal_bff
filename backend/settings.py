@@ -25,9 +25,8 @@ INSTALLED_APPS = [
     "rest_framework",
     "rest_framework.authtoken",
     "djoser",
-    # "rest_framework_simplejwt",
     "django_extensions",
-    # "dr_scaffold",
+    "drf_yasg",
     "corsheaders",
     # apps
     "core",
