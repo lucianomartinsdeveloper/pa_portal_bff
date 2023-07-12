@@ -26,7 +26,8 @@ INSTALLED_APPS = [
     "rest_framework.authtoken",
     "djoser",
     "django_extensions",
-    "drf_yasg",
+    # "drf_yasg",
+    "drf_spectacular",
     "corsheaders",
     # apps
     "core",
@@ -92,20 +93,13 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
-REST_FRAMEWORK = {
-    # "DEFAULT_PERMISSION_CLASSES": (
-    #     "rest_framework.permissions.IsAuthenticated",
-    # ),
-    "DEFAULT_AUTHENTICATION_CLASSES": (
-        "rest_framework.authentication.TokenAuthentication",
-    ),
-}
-
 LANGUAGE_CODE = "pt-br"
 TIME_ZONE = "America/Sao_Paulo"
 USE_I18N = True
 USE_TZ = True
 STATIC_URL = "static/"
+
+DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
 sentry_sdk.init(
     dsn="https://7f36254b0c444c5db28d0e45506e4b68@o4505510564724736.ingest.sentry.io/4505510579798016",
@@ -121,13 +115,30 @@ sentry_sdk.init(
     send_default_pii=True,
 )
 
-DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+REST_FRAMEWORK = {
+    "DEFAULT_SCHEMA_CLASS": "drf_spectacular.openapi.AutoSchema",
+    # "DEFAULT_PERMISSION_CLASSES": (
+    #     "rest_framework.permissions.IsAuthenticated",
+    # ),
+    "DEFAULT_AUTHENTICATION_CLASSES": (
+        "rest_framework.authentication.TokenAuthentication",
+    ),
+}
+
+SPECTACULAR_SETTINGS = {
+    "TITLE": "Projeto Pipoca Ágil API",
+    "DESCRIPTION": "Listagens dos endpoints",
+    "VERSION": "1.0.0",
+    "SERVE_INCLUDE_SCHEMA": False,
+}
 
 DJOSER = {
     "PASSWORD_RESET_CONFIRM_URL": "password/reset/confirm/{uid}/{token}",
     "EMAIL": {"password_reset": "core.email.PasswordResetEmail"},
     "SERIALIZERS": {
-        "user_create": "core.serializers.UserRegistrationSerializer"
+        # "user": "core.serializers.UserSerializer",
+        "user_create": "core.serializers.UserRegistrationSerializer",
+        # "token": "core.serializers.CustomTokenSerializer",
     },
 }
 
