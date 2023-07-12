@@ -1,6 +1,8 @@
 import string
 from datetime import datetime
 
+from djoser.compat import get_user_email, get_user_email_field_name
+from djoser.conf import settings
 from djoser.serializers import (
     UserCreateSerializer as BaseUserRegistrationSerializer,
 )
@@ -49,3 +51,37 @@ class UserRegistrationSerializer(BaseUserRegistrationSerializer):
 class ListUserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
+        fields = "__all__"
+
+    # class UserSerializer(serializers.ModelSerializer):
+    # class Meta:
+    #     model = User
+    #     fields = tuple(User.REQUIRED_FIELDS) + (
+    #         settings.USER_ID_FIELD,
+    #         settings.LOGIN_FIELD,
+    #     )
+    #     read_only_fields = (settings.LOGIN_FIELD,)
+
+    def update(self, instance, validated_data):
+        email_field = get_user_email_field_name(User)
+        instance.email_changed = False
+        if settings.SEND_ACTIVATION_EMAIL and email_field in validated_data:
+            instance_email = get_user_email(instance)
+            if instance_email != validated_data[email_field]:
+                instance.is_active = False
+                instance.email_changed = True
+                instance.save(update_fields=["is_active"])
+        return super().update(instance, validated_data)
+
+
+# class CustomTokenSerializer(TokenSerializer):
+#     def to_representation(self, instance):
+#         data = super().to_representation(instance)
+#         # Adicione os campos do usuário que você deseja retornar
+#         token = data['auth_token']
+#         User.objects.filter()
+#         user = self.context['request'].user
+#         data['username'] = user.username
+#         data['email'] = user.email
+#         # Adicione mais campos personalizados conforme necessário
+#         return data
