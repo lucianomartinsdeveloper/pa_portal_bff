@@ -1,0 +1,1006 @@
+openapi: 3.0.3
+info:
+  title: Your Project API
+  version: 1.0.0
+  description: Your project description
+paths:
+  /api/v1/list_users/:
+    get:
+      operationId: api_v1_list_users_list
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ListUser'
+          description: ''
+    post:
+      operationId: api_v1_list_users_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ListUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ListUser'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUser'
+          description: ''
+  /api/v1/list_users/{id}/:
+    get:
+      operationId: api_v1_list_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUser'
+          description: ''
+    put:
+      operationId: api_v1_list_users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ListUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/ListUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/ListUser'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUser'
+          description: ''
+    patch:
+      operationId: api_v1_list_users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedListUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedListUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedListUser'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ListUser'
+          description: ''
+    delete:
+      operationId: api_v1_list_users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '204':
+          description: No response body
+  /api/v1/token/login/:
+    post:
+      operationId: api_v1_token_login_create
+      description: Use this endpoint to obtain user authentication token.
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/TokenCreate'
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TokenCreate'
+          description: ''
+  /api/v1/token/logout/:
+    post:
+      operationId: api_v1_token_logout_create
+      description: Use this endpoint to logout user (remove user authentication token).
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          description: No response body
+  /api/v1/users/:
+    get:
+      operationId: api_v1_users_list
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/User'
+          description: ''
+    post:
+      operationId: api_v1_users_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UserRegistration'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '201':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UserRegistration'
+          description: ''
+  /api/v1/users/{id}/:
+    get:
+      operationId: api_v1_users_retrieve
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: api_v1_users_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: api_v1_users_partial_update
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: api_v1_users_destroy
+      parameters:
+      - in: path
+        name: id
+        schema:
+          type: integer
+        description: A unique integer value identifying this usuário.
+        required: true
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/users/activation/:
+    post:
+      operationId: api_v1_users_activation_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/Activation'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/Activation'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Activation'
+          description: ''
+  /api/v1/users/me/:
+    get:
+      operationId: api_v1_users_me_retrieve
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    put:
+      operationId: api_v1_users_me_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/User'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/User'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/User'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    patch:
+      operationId: api_v1_users_me_partial_update
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PatchedUser'
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/User'
+          description: ''
+    delete:
+      operationId: api_v1_users_me_destroy
+      tags:
+      - api
+      security:
+      - tokenAuth: []
+      responses:
+        '204':
+          description: No response body
+  /api/v1/users/resend_activation/:
+    post:
+      operationId: api_v1_users_resend_activation_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/users/reset_email/:
+    post:
+      operationId: api_v1_users_reset_email_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/users/reset_email_confirm/:
+    post:
+      operationId: api_v1_users_reset_email_confirm_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/UsernameResetConfirm'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UsernameResetConfirm'
+          description: ''
+  /api/v1/users/reset_password/:
+    post:
+      operationId: api_v1_users_reset_password_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SendEmailReset'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SendEmailReset'
+          description: ''
+  /api/v1/users/reset_password_confirm/:
+    post:
+      operationId: api_v1_users_reset_password_confirm_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/PasswordResetConfirm'
+        required: true
+      security:
+      - tokenAuth: []
+      - {}
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PasswordResetConfirm'
+          description: ''
+  /api/v1/users/set_email/:
+    post:
+      operationId: api_v1_users_set_email_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetUsername'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetUsername'
+          description: ''
+  /api/v1/users/set_password/:
+    post:
+      operationId: api_v1_users_set_password_create
+      tags:
+      - api
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          application/x-www-form-urlencoded:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+          multipart/form-data:
+            schema:
+              $ref: '#/components/schemas/SetPassword'
+        required: true
+      security:
+      - tokenAuth: []
+      responses:
+        '200':
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SetPassword'
+          description: ''
+components:
+  schemas:
+    Activation:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+      required:
+      - token
+      - uid
+    ListUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        password:
+          type: string
+          title: Senha
+          maxLength: 128
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+          title: Último login
+        is_superuser:
+          type: boolean
+          title: Status de superusuário
+          description: Indica que este usuário tem todas as permissões sem atribuí-las
+            explicitamente.
+        first_name:
+          type: string
+          title: Primeiro nome
+          maxLength: 150
+        last_name:
+          type: string
+          title: Último nome
+          maxLength: 150
+        username:
+          type: string
+          title: Nome
+          maxLength: 150
+        uid:
+          type: string
+          format: uuid
+          readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        occupation:
+          $ref: '#/components/schemas/OccupationEnum'
+        birth_date:
+          type: string
+          format: date
+          title: Data de Nascimento
+        type_of_audience:
+          allOf:
+          - $ref: '#/components/schemas/TypeOfAudienceEnum'
+          title: Tipo de público
+        cpf:
+          type: string
+          nullable: true
+          maxLength: 11
+        registered:
+          type: boolean
+          title: Inscrito
+        subscriber:
+          type: boolean
+          title: Assinante
+        is_deleted:
+          type: boolean
+          title: Foi deletado?
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Data da Deleção
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+        is_staff:
+          type: boolean
+          title: Membro da equipe
+          description: Indica que usuário consegue acessar este site de administração.
+        is_active:
+          type: boolean
+          title: Ativo
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Data da Entrada
+        address:
+          type: integer
+          nullable: true
+        telephone:
+          type: integer
+          nullable: true
+        groups:
+          type: array
+          items:
+            type: integer
+            title: Grupos
+          title: Grupos
+          description: Os grupos que este usuário pertence. Um usuário terá todas
+            as permissões concedidas a cada um dos seus grupos.
+        user_permissions:
+          type: array
+          items:
+            type: integer
+            title: Permissões do usuário
+          title: Permissões do usuário
+          description: Permissões específicas para este usuário.
+      required:
+      - birth_date
+      - created
+      - date_joined
+      - email
+      - id
+      - password
+      - type_of_audience
+      - uid
+      - updated
+      - username
+    OccupationEnum:
+      enum:
+      - AT
+      type: string
+      description: '* `AT` - Autônomo'
+    PasswordResetConfirm:
+      type: object
+      properties:
+        uid:
+          type: string
+        token:
+          type: string
+        new_password:
+          type: string
+      required:
+      - new_password
+      - token
+      - uid
+    PatchedListUser:
+      type: object
+      properties:
+        id:
+          type: integer
+          readOnly: true
+        password:
+          type: string
+          title: Senha
+          maxLength: 128
+        last_login:
+          type: string
+          format: date-time
+          nullable: true
+          title: Último login
+        is_superuser:
+          type: boolean
+          title: Status de superusuário
+          description: Indica que este usuário tem todas as permissões sem atribuí-las
+            explicitamente.
+        first_name:
+          type: string
+          title: Primeiro nome
+          maxLength: 150
+        last_name:
+          type: string
+          title: Último nome
+          maxLength: 150
+        username:
+          type: string
+          title: Nome
+          maxLength: 150
+        uid:
+          type: string
+          format: uuid
+          readOnly: true
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        occupation:
+          $ref: '#/components/schemas/OccupationEnum'
+        birth_date:
+          type: string
+          format: date
+          title: Data de Nascimento
+        type_of_audience:
+          allOf:
+          - $ref: '#/components/schemas/TypeOfAudienceEnum'
+          title: Tipo de público
+        cpf:
+          type: string
+          nullable: true
+          maxLength: 11
+        registered:
+          type: boolean
+          title: Inscrito
+        subscriber:
+          type: boolean
+          title: Assinante
+        is_deleted:
+          type: boolean
+          title: Foi deletado?
+        deleted_at:
+          type: string
+          format: date-time
+          nullable: true
+          title: Data da Deleção
+        created:
+          type: string
+          format: date-time
+          readOnly: true
+        updated:
+          type: string
+          format: date-time
+          readOnly: true
+        is_staff:
+          type: boolean
+          title: Membro da equipe
+          description: Indica que usuário consegue acessar este site de administração.
+        is_active:
+          type: boolean
+          title: Ativo
+        date_joined:
+          type: string
+          format: date-time
+          readOnly: true
+          title: Data da Entrada
+        address:
+          type: integer
+          nullable: true
+        telephone:
+          type: integer
+          nullable: true
+        groups:
+          type: array
+          items:
+            type: integer
+            title: Grupos
+          title: Grupos
+          description: Os grupos que este usuário pertence. Um usuário terá todas
+            as permissões concedidas a cada um dos seus grupos.
+        user_permissions:
+          type: array
+          items:
+            type: integer
+            title: Permissões do usuário
+          title: Permissões do usuário
+          description: Permissões específicas para este usuário.
+    PatchedUser:
+      type: object
+      properties:
+        username:
+          type: string
+          title: Nome
+          maxLength: 150
+        birth_date:
+          type: string
+          format: date
+          title: Data de Nascimento
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+    SendEmailReset:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+      required:
+      - email
+    SetPassword:
+      type: object
+      properties:
+        new_password:
+          type: string
+        current_password:
+          type: string
+      required:
+      - current_password
+      - new_password
+    SetUsername:
+      type: object
+      properties:
+        current_password:
+          type: string
+        new_email:
+          type: string
+          format: email
+          title: Email
+          maxLength: 254
+      required:
+      - current_password
+      - new_email
+    TokenCreate:
+      type: object
+      properties:
+        password:
+          type: string
+        email:
+          type: string
+    TypeOfAudienceEnum:
+      enum:
+      - MIG
+      - PRO
+      - CUR
+      type: string
+      description: |-
+        * `MIG` - Migrando para a área de agilidade
+        * `PRO` - Profissional da área de agilidade
+        * `CUR` - Curioso sobre o universo da agilidade
+    User:
+      type: object
+      properties:
+        username:
+          type: string
+          title: Nome
+          maxLength: 150
+        birth_date:
+          type: string
+          format: date
+          title: Data de Nascimento
+        id:
+          type: integer
+          readOnly: true
+        email:
+          type: string
+          format: email
+          readOnly: true
+      required:
+      - birth_date
+      - email
+      - id
+      - username
+    UserRegistration:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          maxLength: 254
+        username:
+          type: string
+        birth_date:
+          type: string
+          format: date
+        type_of_audience:
+          type: string
+        password:
+          type: string
+          writeOnly: true
+      required:
+      - birth_date
+      - email
+      - password
+      - type_of_audience
+      - username
+    UsernameResetConfirm:
+      type: object
+      properties:
+        new_email:
+          type: string
+          format: email
+          title: Email
+          maxLength: 254
+      required:
+      - new_email
+  securitySchemes:
+    tokenAuth:
+      type: apiKey
+      in: header
+      name: Authorization
+      description: Token-based authentication with required prefix "Token"

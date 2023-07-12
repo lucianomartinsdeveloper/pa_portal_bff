@@ -1,0 +1,52 @@
+{% extends 'base.html' %}
+
+{% block content %}
+    <div class="row">
+        <div class="col-sm-12 text-center">
+            <h1>Lista de Assinantes</h1>
+        </div>
+    </div>
+    <br>
+    <br>
+    Filtro
+    <form action="">
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="pornome" id="exampleRadios1" value="option1" checked>
+            <label class="form-check-label" for="exampleRadios1">
+                Por Nome
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="poremail" id="exampleRadios2" value="option2">
+            <label class="form-check-label" for="exampleRadios2">
+                Por Email
+            </label>
+        </div>
+        <div class="form-check">
+            <input class="form-check-input" type="radio" name="pordatanasc" id="exampleRadios2" value="option2">
+            <label class="form-check-label" for="exampleRadios2">
+                Por Data de Nascimento
+            </label>
+        </div>
+    </form>
+    <table class="table table-condensed">
+        <thead>
+                <tr>
+                    <th>Nome</th>
+                    <th>Email</th>
+                    <th>Data de Nascimento</th>
+                    <th>Tipo de público</th>
+                </tr>
+        </thead>
+        <tbody>
+            {% for user in users %}
+                <tr>
+                    <td>{{ user.username }}</td>
+                    <td>{{ user }}</td>
+                    <td>{{ user.birth_date }}</td>
+                    <td>{{ user.type_of_audience }}</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock content %}
