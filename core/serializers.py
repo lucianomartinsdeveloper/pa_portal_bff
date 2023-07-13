@@ -3,6 +3,7 @@ from datetime import datetime
 
 from djoser.compat import get_user_email, get_user_email_field_name
 from djoser.conf import settings
+from djoser.serializers import TokenSerializer
 from djoser.serializers import (
     UserCreateSerializer as BaseUserRegistrationSerializer,
 )
@@ -74,14 +75,12 @@ class ListUserSerializer(serializers.ModelSerializer):
         return super().update(instance, validated_data)
 
 
-# class CustomTokenSerializer(TokenSerializer):
-#     def to_representation(self, instance):
-#         data = super().to_representation(instance)
-#         # Adicione os campos do usuário que você deseja retornar
-#         token = data['auth_token']
-#         User.objects.filter()
-#         user = self.context['request'].user
-#         data['username'] = user.username
-#         data['email'] = user.email
-#         # Adicione mais campos personalizados conforme necessário
-#         return data
+class CustomTokenSerializer(TokenSerializer):
+    def to_representation(self, instance):
+        return {
+            "username": instance.user.username,
+            "email": instance.user.email,
+            "auth_token": instance.user.auth_token.key,
+            "role": instance.user.role,
+            "is_staff": instance.user.is_staff,
+        }

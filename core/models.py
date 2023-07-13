@@ -8,6 +8,8 @@ from django.db import models
 from django.db.models import UUIDField
 from django.utils.translation import gettext_lazy as _
 
+from . import constantes
+
 
 class UserManager(BaseUserManager):
     def _create_user(self, email, password, **extra_fields):
@@ -38,33 +40,27 @@ class UserManager(BaseUserManager):
 
 
 class User(AbstractUser, PermissionsMixin):
-    AUTONOMO = "AT"
-    OCCUPATION_CHOICES = [
-        (AUTONOMO, "Autônomo"),
-    ]
-    MIG = "MIG"
-    PRO = "PRO"
-    CUR = "CUR"
-    TYPE_OF_AUDIENCE_CHOICES = [
-        (MIG, "Migrando para a área de agilidade"),
-        (PRO, "Profissional da área de agilidade"),
-        (CUR, "Curioso sobre o universo da agilidade"),
-    ]
     username = models.CharField("Nome", max_length=150)
     uid = UUIDField(default=uuid.uuid4, editable=False)
     email = models.EmailField("Email", unique=True)
     occupation = models.CharField(
         max_length=2,
-        choices=OCCUPATION_CHOICES,
-        default=AUTONOMO,
+        choices=constantes.OCCUPATION_CHOICES,
+        default=constantes.AUTONOMO,
     )
     birth_date = models.DateField("Data de Nascimento")
     type_of_audience = models.CharField(
-        "Tipo de público", max_length=3, choices=TYPE_OF_AUDIENCE_CHOICES
+        "Tipo de público",
+        max_length=3,
+        choices=constantes.TYPE_OF_AUDIENCE_CHOICES,
     )
     cpf = models.CharField(max_length=11, null=True, blank=True)
-    registered = models.BooleanField("Inscrito", default=False)
-    subscriber = models.BooleanField("Assinante", default=False)
+    role = models.CharField(
+        "Papel",
+        max_length=10,
+        choices=constantes.TYPE_ROLES,
+        default=constantes.USE,
+    )
     is_deleted = models.BooleanField("Foi deletado?", default=False)
     deleted_at = models.DateTimeField("Data da Deleção", null=True, blank=True)
     address = models.ForeignKey(
@@ -150,13 +146,10 @@ class Occupation(models.Model):
 
 
 class Telephone(models.Model):
-    TYPE_PHONE = [
-        ("cel", "Celular"),
-        ("fix", "Fixo"),
-    ]
-
     number = models.CharField("Número", max_length=20)
-    type = models.CharField("Número", choices=TYPE_PHONE, max_length=3)
+    type = models.CharField(
+        "Número", choices=constantes.TYPE_PHONE, max_length=3
+    )
 
     def __str__(self):
         return f"{self.number}"
