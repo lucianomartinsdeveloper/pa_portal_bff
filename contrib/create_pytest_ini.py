@@ -1,5 +1,6 @@
 import os
 
+
 filename = "pytest.ini"
 
 # Pega o diretório raiz do projeto

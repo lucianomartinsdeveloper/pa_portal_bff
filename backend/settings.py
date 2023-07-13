@@ -138,7 +138,7 @@ DJOSER = {
     "SERIALIZERS": {
         # "user": "core.serializers.UserSerializer",
         "user_create": "core.serializers.UserRegistrationSerializer",
-        # "token": "core.serializers.CustomTokenSerializer",
+        "token": "core.serializers.CustomTokenSerializer",
     },
 }
 
