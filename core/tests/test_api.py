@@ -71,7 +71,6 @@ def test_create_user_less_than_3_letters(db):
 
 def test_must_be_of_legal_age(db):
     data_birth = datetime.now() + timedelta(days=1)
-    print(">>>>>>>>>>>>>>>>>>PASSOU<<<<<<<<<<<<<<<<")
     data = {
         "birth_date": data_birth.strftime("%Y-%m-%d"),
         "email": "p1@p.com",
@@ -152,3 +151,68 @@ def test_password_entirely_numerical(db):
     response = client.post("/api/v1/users/", data=data)
     assert response.status_code == status.HTTP_400_BAD_REQUEST
     assert "Esta senha é inteiramente numérica." in response.json()["password"]
+
+
+def test_login_return_ok(db):
+    data = {
+        "username": "Pedro",
+        "email": "teste@teste.com",
+        "password": "mudar1234",
+        "birth_date": "2005-06-20",
+        "type_of_audience": "AT",
+    }
+    client.post("/api/v1/users/", data=data)
+    payload = {"email": "teste@teste.com", "password": "mudar1234"}
+    response = client.post("/api/v1/token/login/", data=payload)
+    assert response.status_code == status.HTTP_200_OK
+    assert response.json()["email"] == data["email"]
+    assert response.json()["username"] == data["username"]
+    assert len(response.json()["auth_token"]) == 40
+
+
+def test_login_with_wrong_email(db):
+    data = {
+        "username": "Pedro",
+        "email": "teste@teste.com",
+        "password": "mudar1234",
+        "birth_date": "2005-06-20",
+        "type_of_audience": "AT",
+    }
+    client.post("/api/v1/users/", data=data)
+    payload = {"email": "teste1@teste.com", "password": "mudar1234"}
+    response = client.post("/api/v1/token/login/", data=payload)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+def test_login_with_wrong_password(db):
+    data = {
+        "username": "Pedro",
+        "email": "teste@teste.com",
+        "password": "mudar1234",
+        "birth_date": "2005-06-20",
+        "type_of_audience": "AT",
+    }
+    client.post("/api/v1/users/", data=data)
+    payload = {"email": "teste@teste.com", "password": "mudar234"}
+    response = client.post("/api/v1/token/login/", data=payload)
+    assert response.status_code == status.HTTP_400_BAD_REQUEST
+
+
+def test_return_token_after_login(db):
+    data = {
+        "username": "Pedro",
+        "email": "teste@teste.com",
+        "password": "mudar1234",
+        "birth_date": "2005-06-20",
+        "type_of_audience": "AT",
+    }
+    client.post("/api/v1/users/", data=data)
+    payload = {"email": "teste@teste.com", "password": "mudar1234"}
+    response = client.post("/api/v1/token/login/", data=payload)
+    assert response.json()["username"] == data["username"]
+    assert response.json()["email"] == data["email"]
+    # É assinante, só mudará após confirmar no e-mail OU via página do adm
+    assert response.json()["role"] == "USE"
+    # É administrador
+    assert response.json()["is_staff"] is False
+    assert len(response.json()["auth_token"]) == 40
